@@ -1,5 +1,8 @@
 package com.company;
 
+import java.rmi.StubNotFoundException;
+import java.util.ArrayList;
+
 public class StudentStorage {
     static int size = 15;
     static Student[] array = new Student[size];
@@ -50,46 +53,70 @@ public class StudentStorage {
         }
         return foundStudents;
     }
-
-    public Student[] showTop10StudentsByAvg() {
-        boolean isSorted = false;
-        while (!isSorted) {
-            isSorted = true;
-            for (int i = 0; i < array.length - 1; i++) {
-                Student first = array[i];
-                Student second = array[i + 1];
-                if (first != null && second != null && first.getAvgGrade() < second.getAvgGrade()) {
-                    Student bubble = array[i];
-                    array[i] = array[i + 1];
-                    array[i + 1] = bubble;
-                    isSorted = false;
-                }
+    public Student[] findStudentByAge(int age) {
+        Student[] foundStudents = new Student[size];
+        int foundIndex = 0;
+        for (int i = 0; i < array.length; i++) {
+            Student current = array[i];
+            if (current != null && current.getAge() == age) {
+                foundStudents[foundIndex] = current;
+                foundIndex++;
             }
-        }
-        Student[] foundStudents = new Student[10];
-        for (int i = 0; i < foundStudents.length - 1; i++) {
-            foundStudents[i] = array[i];
         }
         return foundStudents;
     }
-    public Student[] showTop10StudentsByAge() {
+    public Student[] findStudentByAvg(double avg) {
+        Student[] foundStudents = new Student[size];
+        int foundIndex = 0;
+        for (int i = 0; i < array.length; i++) {
+            Student current = array[i];
+            if (current !=null && current.getAvgGrade() == avg) {
+                foundStudents[foundIndex] = current;
+                foundIndex++;
+            }
+        }
+        return foundStudents;
+    }
+    public Student[] showTop10StudentsByAvg() {
+        Student[] foundStudents = new Student[10];
+        for (int i = 0; i < foundStudents.length - 1; i++) {
+            foundStudents[i] = array[i];
+        }
         boolean isSorted = false;
         while (!isSorted) {
             isSorted = true;
-            for (int i = 0 ; i < array.length - 1; i++) {
-                Student first = array[i];
-                Student second = array[i + 1];
-                if (first != null && second != null && first.getAge() < second.getAge()) {
-                    Student bubble = array[i];
-                    array[i] = array[i + 1];
-                    array[i + 1] = bubble;
+            for (int i = 0; i < foundStudents.length - 1; i++) {
+                Student first = foundStudents[i];
+                Student second = foundStudents[i + 1];
+                if (first != null && second != null && first.getAvgGrade() < second.getAvgGrade()) {
+                    Student bubble = foundStudents[i];
+                    foundStudents[i] = foundStudents[i + 1];
+                    foundStudents[i + 1] = bubble;
                     isSorted = false;
                 }
             }
         }
+        return foundStudents;
+    }
+
+    public Student[] showTop10StudentsByAge() {
         Student[] foundStudents = new Student[10];
         for (int i = 0; i < foundStudents.length - 1; i++) {
             foundStudents[i] = array[i];
+        }
+        boolean isSorted = false;
+        while (!isSorted) {
+            isSorted = true;
+            for (int i = 0; i < foundStudents.length - 1; i++) {
+                Student first = foundStudents[i];
+                Student second = foundStudents[i + 1];
+                if (first != null && second != null && first.getAge() < second.getAge()) {
+                    Student bubble = foundStudents[i];
+                    foundStudents[i] = foundStudents[i + 1];
+                    foundStudents[i + 1] = bubble;
+                    isSorted = false;
+                }
+            }
         }
         return foundStudents;
     }

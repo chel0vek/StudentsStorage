@@ -20,7 +20,7 @@ public class Main {
                     2. Удалить студента
                     3. Показать список всех студентов
                     4. Поиск студента по составляющим
-                    5. Поиск студентов по успеваемости
+                    5. Сортировка студентов
                     """);
             int choice = input.nextInt();
             if (choice == 1) {
@@ -88,7 +88,9 @@ public class Main {
         System.out.println("""
                 1. Поиск по имени студента
                 2. Поиск по группе студента
-                3. Вернуться назад
+                3. Поиск по возрасту студента
+                4. Поиск по среднему баллу студента
+                5. Вернуться назад
                 """);
         int choice = input.nextInt();
         if (choice == 1) {
@@ -98,6 +100,12 @@ public class Main {
             findStudentByGroupM();
         }
         if (choice == 3) {
+            findStudentByAgeM();
+        }
+        if (choice == 4) {
+            findStudentByAvgM();
+        }
+        if (choice == 5) {
             menu();
         } else {
             sortSearchByСonstituents();
@@ -122,7 +130,24 @@ public class Main {
             System.out.println("Произошла ошибка при добавлении студента");
         }
     }
-
+    public static void findStudentByAvgM() {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Введите средний балл студента");
+        double avg = input.nextDouble();
+        var students = studentStorage.findStudentByAvg(avg);
+        for (Student list : students) {
+            System.out.println(list);
+        }
+    }
+    public static void findStudentByAgeM() {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Введите возраст ученика");
+        int age = input.nextInt();
+        var students = studentStorage.findStudentByAge(age);
+        for (Student list : students) {
+            System.out.println(list);
+        }
+    }
     public static void removeStudentM() {
         Scanner input = new Scanner(System.in);
         System.out.println("Введите номер студента");
